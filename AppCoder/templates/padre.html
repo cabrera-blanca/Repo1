@@ -23,11 +23,13 @@
                 <a class="navbar-brand" href="{% url 'home' %}">HOME 🎓 </a>
                 <a class="navbar-brand" href="{% url 'cursos' %}">Cursos</a>
                 <a class="navbar-brand" href="{% url 'alumnos' %}">Alumnos</a>
-                <a class="navbar-brand" href="">Profesores</a>
+                <a class="navbar-brand" href="{% url 'profesores' %}">Profesores</a>
                 <a class="navbar-brand" href="">Ingresar</a>
                 <a class="btn btn-primary" href="">Registrate</a>
             </div>
         </nav>
+
+        {% block contenido %}  
         <!-- Masthead-->
         <header class="masthead">
             <div class="container position-relative">
@@ -35,10 +37,9 @@
                 <h2 class="text-white font-weight-normal mb-0 text-center">Una plataforma para estudiantes y profesores de programación.</h2> 
             </div>
         </header>
-
-        {% block contenido %}  
-
         {% endblock %}
+
+        
         <!-- Footer-->
         <footer class="footer bg-light">
             <div class="container">

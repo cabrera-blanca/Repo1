@@ -4,7 +4,7 @@
 
 {% block contenido %}
 
-    <form action="{% url 'editar_alumno' alumno.id%}" method="post">
+    <form action="{% url 'editar_alumnos' alumno.id%}" method="post">
         {% csrf_token %}
 
         <p> Nombre : </p>

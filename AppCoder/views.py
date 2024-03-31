@@ -73,7 +73,6 @@ def editar_curso(request , id):
 def alumnos (request):
     return render (request , "alumnos.html") 
 
-
 def ver_alumnos(request):
     alumnos = Alumno.objects.all()
     dicc =  {"alumnos":alumnos }
@@ -134,3 +133,12 @@ def resultado_alumno(request):
         HttpResponse("Ingrese el nombre del curso")
 
 # -----------Profesores---------- #
+def profesores(request):
+    return render (request , "profesores.html") 
+
+def ver_profesores(request):
+    profesores = Profesores.objects.all()
+    dicc =  {"profesores":profesores }
+    plantilla = loader.get_template("ver_profesores.html")
+    respuesta = plantilla.render(dicc)
+    return HttpResponse(respuesta)
