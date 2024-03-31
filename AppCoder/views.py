@@ -4,18 +4,13 @@ from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import *
 
-# Create your views here.
+# -----------VIEWS---------- #
 
-# def altacurso (request,nombre):
-#     curso = Curso(nombre=nombre , camada=12345)
-#     curso.save()
-#     texto   = f"Se guardó en la BD el curso : {curso.nombre} , camada : {curso.camada} "
-    
-#     return HttpResponse(request, texto)  #Esto es lo que se enviará a la página web para mostrarlo al usuario
-
-
+# -----------Home---------- #
 def inicio (request):
     return render(request, "padre.html")
+
+# -----------Cursos---------- #
 
 def ver_cursos (request):
     cursos = Curso.objects.all()
@@ -23,9 +18,6 @@ def ver_cursos (request):
     plantilla = loader.get_template("ver_cursos.html")
     respuesta = plantilla.render(dicc)
     return HttpResponse(respuesta)
-
-def alumnos (request):
-    return render (request , "alumnos.html") 
 
 def curso_formulario(request):
 
@@ -75,3 +67,11 @@ def editar_curso(request , id):
         mi_formulario = Curso_formulario(initial={"nombre":curso.nombre , "camada":curso.camada})
 
     return render( request , "editar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
+
+# -----------Alumnos---------- #
+
+def alumnos (request):
+    return render (request , "alumnos.html") 
+
+
+# -----------Profesores---------- #
