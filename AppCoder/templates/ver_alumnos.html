@@ -1,0 +1,46 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+
+{% block contenido %}
+    <main class="container">
+        <h1 class="text-center title" style="margin: 2rem">Alumnos Registrados : </h1>
+        <a href="alta_alumnos" class="btn btn-primary btn-sm">Nuevo Alumno</a>
+        <a href="buscar_alumnos" class="btn btn-outline-danger btn-sm">Buscar Alumno</a>
+        <table class="table text-center"  id="tabla_alumnos">
+            <thead>
+                <!--Encabezado de tabla-->
+                <tr>
+                    <th style="display: none;">ID</th>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th>Fecha Nacimiento</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <!--Contenido de tabla-->
+                {% for n in alumnos %}
+                    <tr>
+                        <td style=" display: none;">{{n.id}}</td>
+                        <td>{{n.apellido}}</td>
+                        <td>{{n.nombre}}</td>
+                        <td>{{n.dni}}</td>
+                        <td>{{n.email}}</td>
+                        <td>{{n.fecha_nacimiento}}</td>
+                        
+                        <!--Botones-->
+                        <td><a href="{% url 'eliminar_alumnos' n.id %}" class="btn btn-outline-danger">BORRAR</a></td>
+                        <td><a href="{% url 'editar_alumnos' n.id %}" class="btn btn-outline-warning">EDITAR</a></td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
+    </main>
+    
+
+{% endblock %}

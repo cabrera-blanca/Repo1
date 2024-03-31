@@ -1,0 +1,17 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+ 
+
+{% block contenido %}
+
+    <h2> Buscar Alumno por DNI 🔎</h2>
+    <form action="buscar_dni" method="get">
+
+        <p>DNI:</p>
+        <input type="text" name="dni" id="dni">
+        <button>Buscar...</button>
+
+    </form>
+{% endblock %} 

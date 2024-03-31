@@ -38,8 +38,8 @@ def buscar_curso (request):
 
 def buscar(request):
 
-    if request.get["nombre"]:
-        nombre = request.get["nombre"]
+    if request.method == "GET":
+        nombre = request.GET['nombre']
         cursos = Curso.objects.filter(nombre__icontains=nombre)
         return render(request,"busqueda.html",{"cursos" : cursos})    
     else :
@@ -73,5 +73,64 @@ def editar_curso(request , id):
 def alumnos (request):
     return render (request , "alumnos.html") 
 
+
+def ver_alumnos(request):
+    alumnos = Alumno.objects.all()
+    dicc =  {"alumnos":alumnos }
+    plantilla = loader.get_template("ver_alumnos.html")
+    respuesta = plantilla.render(dicc)
+    return HttpResponse(respuesta)
+
+def alumno_formulario(request):
+
+    if request.method == "POST":
+    
+        mi_formulario = Alumno_formulario(request.POST)
+        
+        if mi_formulario.is_valid(): 
+            datos =  mi_formulario.cleaned_data
+            alumno = Alumno( apellido=datos["apellido"] , nombre = datos["nombre"],dni =datos["dni"],email =datos["email"], fecha_nacimiento = datos ["fecha_nacimiento"])
+            alumno.save()
+            return render(request , "alta_alumnos.html")
+
+    return render(request , "alta_alumnos.html")
+
+def eliminar_alumno(request, id):
+    Alumno.objects.get(id=id).delete()
+    alumno = Alumno.objects.all()
+    return render(request , "ver_alumnos.html", {"alumnos" :alumno})
+
+def editar_alumno(request , id):
+    alumno = Alumno.objects.get(id=id)
+
+    if request.method == "POST":
+        mi_formulario = Alumno_formulario( request.POST )
+
+        if mi_formulario.is_valid():
+            datos = mi_formulario.cleaned_data
+            alumno.apellido = datos["apellido"]
+            alumno.nombre = datos["nombre"]
+            alumno.dni = datos["dni"]
+            alumno.email = datos["email"]
+            alumno.fecha_nacimiento = datos["fecha_nacimiento"]
+            alumno.save()
+            alumno = Alumno.objects.all()
+            return render(request , "ver_alumnos.html" , {"alumno":alumno})
+    else:
+        mi_formulario = Alumno_formulario(initial={"nombre":alumno.nombre , "apellido":alumno.apellido, "dni": alumno.dni, "email": alumno.email, "fecha_nacimiento": alumno.fecha_nacimiento})
+
+    return render( request , "editar_alumnos.html" , {"mi_formulario": mi_formulario , "alumno":alumno})
+
+def buscar_alumno (request):
+    return render(request, "busqueda_alumno.html")
+
+def resultado_alumno(request):
+
+    if request.method == "GET":
+        dni = request.GET['dni']
+        alumno = Alumno.objects.filter(dni__icontains=dni)
+        return render(request,"resultado.alumno.html",{"alumnos" : alumno})    
+    else :
+        HttpResponse("Ingrese el nombre del curso")
 
 # -----------Profesores---------- #

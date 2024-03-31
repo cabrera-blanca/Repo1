@@ -1,0 +1,50 @@
+
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+    <div>
+
+        <h1 class="text-center title" style="margin: 2rem">Alumno Registrado con ese DNI: </h1>
+
+        
+
+        {% if alumnos %}
+
+            <table class="table text-center"  id="resultado_alumnos">
+                <thead>
+                    <!--Encabezado de tabla-->
+                    <tr>
+                        <th style="display: none;">ID</th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Fecha Nacimiento</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!--Contenido de tabla-->
+                    {% for n in alumnos %}
+                        <tr>
+                            <td style=" display: none;">{{n.id}}</td>
+                            <td>{{n.dni}}</td>
+                            <td>{{n.nombre}}</td>
+                            <td>{{n.apellido}}</td>
+                            <td>{{n.email}}</td>
+                            <td>{{n.fecha_nacimiento}}</td>
+            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        {% else %}
+            <p>No hay personas registradas con ese DNI </p>
+        {% endif %}
+
+    </div>
+{% endblock %}  

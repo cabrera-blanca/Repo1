@@ -5,12 +5,12 @@
 
 {% block contenido %}
     <main class="container">
-        <h1 class="text-center title">Cursos</h1>
+        <h1 class="text-center title" style="margin: 2rem">Cursos Disponibles : </h1>
         <a href="alta_curso" class="btn btn-primary btn-sm">Nuevo Curso</a>
-        <table class="table"  id="tabla_cursos">
+        <table class="table text-center"  id="tabla_cursos">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th style="display: none;">ID</th>
                     <th>Nombre</th>
                     <th>Camada</th>
                 </tr>
@@ -19,7 +19,7 @@
             <tbody>
                 {% for n in cursos %}
                     <tr>
-                        <td>{{n.id}}</td>
+                        <td style=" display: none;">{{n.id}}</td>
                         <td>{{n.nombre}}</td>
                         <td>{{n.camada}}</td>
                         <td><a href="{% url 'eliminar_curso' n.id %}" class="btn btn-outline-danger">BORRAR</a></td>

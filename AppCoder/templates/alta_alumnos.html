@@ -1,0 +1,28 @@
+{% extends "padre.html" %}
+
+{% load static %}
+    
+
+{% block contenido %}
+
+    <form action="alta_alumnos" method="post">
+
+        {% csrf_token %}    
+
+        <p>Apellido:</p>
+        <input type="text" name="apellido" required>
+        <p>Nombre :</p>
+        <input type="text" name="nombre" required>
+        <p>DNI:</p>
+        <input type="number" name="dni" required>
+        <p>Email :</p>
+        <input type="email" name="email" required>
+        <p>Fecha de Nacimiento:</p>
+        <input type="date" name="fecha_nacimiento" required>
+        <p>Curso al que se quiere registrar:</p>
+           
+
+        <button class="btn btn-primary">Enviar</button>
+        
+    </form>     
+{%endblock%}
