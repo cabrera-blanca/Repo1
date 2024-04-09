@@ -29,6 +29,7 @@ urlpatterns = [
     #---Registro--#
     path("registro",views.register , name ="registro"),
     #---Edit User ---#
+    path("editarPerfil", views.editarPerfil , name = "EditarPerfil"),
     #---LogOut---#
-    path('logout', LogoutView.as_view(template_name= "logged_out.html") , name="logout"),
+    path("logout", LogoutView.as_view(template_name= "logout.html") , name="Logout"),
 ]

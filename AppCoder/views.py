@@ -167,6 +167,7 @@ def login_request(request):
 # -----------Registro---------- #
 
 def register (request):
+
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -179,3 +180,17 @@ def register (request):
     else:
         form = UserCreationForm()
     return render(request,"registro.html",{"form":form})
+
+# -----------Editar Perfil User---------- #
+
+def editarPerfil(request):
+    usuario= request.user
+    if request.method=='POST':
+        pass
+    else:
+        miFormulario = UserEditForm(initial ={'email': usuario.email})
+
+    return render (request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario":usuario} )
+
+
+
