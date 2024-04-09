@@ -3,7 +3,8 @@ from AppCoder.models import *
 from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import *
-
+from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
+from django.contrib.auth import login, authenticate
 # -----------VIEWS---------- #
 
 # -----------Home---------- #
@@ -137,8 +138,44 @@ def profesores(request):
     return render (request , "profesores.html") 
 
 def ver_profesores(request):
+
     profesores = Profesores.objects.all()
     dicc =  {"profesores":profesores }
     plantilla = loader.get_template("ver_profesores.html")
     respuesta = plantilla.render(dicc)
     return HttpResponse(respuesta)
+
+# -----------LOGIN---------- #
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+            user = authenticate(username=usuario , password=contra)
+            if user is not None:
+                login(request , user )
+                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}"})
+            else:
+                return HttpResponse(f"Usuario no encontrado")
+        else:
+            return HttpResponse(f"FORM INCORRECTO {form}")
+
+    form = AuthenticationForm()
+    return render( request , "login.html" , {"form":form})
+
+# -----------Registro---------- #
+
+def register (request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request,user)
+            return redirect ('home')
+    else:
+        form = UserCreationForm()
+    return render(request,"registro.html",{"form":form})
