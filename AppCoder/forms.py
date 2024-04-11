@@ -4,6 +4,20 @@ from AppCoder.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+#--Usuarios
+class User_creation(UserCreationForm):
+    username = forms.CharField(help_text="Required", label=("Username"))
+    email = forms.EmailField(help_text="Required", label=("Email"))
+    password1 = forms.CharField(label=("Password"), widget= forms.PasswordInput, help_text='Use at least one letter, one number and one special')
+    password2 = forms.CharField(label=("Confirm password"), widget= forms.PasswordInput , help_text='Enter the same password as before, for verification.')
+
+    class Meta:
+        model =  User
+        fields = ('username', 'email','password1', 'password2')
+        help_text ={k:"" for k in fields}
+
+#------------------------------------------------------------
+
 #--Cursos
 
 class Curso_formulario(forms.Form):
@@ -25,7 +39,7 @@ class Alumno_formulario(forms.Form):
     # curso = forms.ChoiceField(choices=(models.ForeignKey(Curso, on_delete=models.SET_NULL, blank=True, null=True)), required=True, label="Seleccione su curso")
 
 class UserEditForm(UserCreationForm):
-    email = forms.EmailField(help_text="Required. Inform a valid email address.", label=("E-mail"))
+    user = forms.CharField(help_text="Required", label=("Usuario"))
     password1 = forms.CharField(label=("Password"), widget= forms.PasswordInput, help_text='Use at least one letter, one number and one special')
     password2 = forms.CharField(label=("Confirm password"), widget= forms.PasswordInput , help_text='Enter the same password as before, for verification.')
 

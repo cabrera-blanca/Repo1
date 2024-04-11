@@ -169,16 +169,17 @@ def login_request(request):
 def register (request):
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = User_creation(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('Username')
+            email = form.cleaned_data.get('Email')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            user = authenticate(username=username,email=email, password=raw_password)
             login(request,user)
             return redirect ('home')
     else:
-        form = UserCreationForm()
+        form = User_creation()
     return render(request,"registro.html",{"form":form})
 
 # -----------Editar Perfil User---------- #
@@ -186,7 +187,15 @@ def register (request):
 def editarPerfil(request):
     usuario= request.user
     if request.method=='POST':
-        pass
+        miFormulario = UserEditForm(request.POST, instance=usuario)
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+            usuario.user =informacion["user"]
+            password = informacion ["password1"]
+            usuario.set_password(password)
+            usuario.save()
+
+            return render (request , "inicio.html")
     else:
         miFormulario = UserEditForm(initial ={'email': usuario.email})
 
