@@ -5,20 +5,24 @@ from django.template import loader
 from AppCoder.forms import *
 from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+
 # -----------VIEWS---------- #
 
 # -----------Home---------- #
 def inicio (request):
-    return render(request, "padre.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "padre.html", {"url":avatares[0].imagen.url})
 
 # -----------Cursos---------- #
 
+@login_required
 def ver_cursos (request):
+    
     cursos = Curso.objects.all()
-    dicc =  {"cursos":cursos }
-    plantilla = loader.get_template("ver_cursos.html")
-    respuesta = plantilla.render(dicc)
-    return HttpResponse(respuesta)
+    avatares = Avatar.objects.filter(user=request.user.id)
+    
+    return render (request, "ver_cursos.html", {"url": avatares[0].imagen.url, "cursos": cursos})
 
 def curso_formulario(request):
 
@@ -72,7 +76,8 @@ def editar_curso(request , id):
 # -----------Alumnos---------- #
 
 def alumnos (request):
-    return render (request , "alumnos.html") 
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render (request , "alumnos.html", {"url":avatares[0].imagen.url}) 
 
 def ver_alumnos(request):
     alumnos = Alumno.objects.all()
@@ -95,6 +100,7 @@ def alumno_formulario(request):
 
     return render(request , "alta_alumnos.html")
 
+@login_required
 def eliminar_alumno(request, id):
     Alumno.objects.get(id=id).delete()
     alumno = Alumno.objects.all()
@@ -135,7 +141,8 @@ def resultado_alumno(request):
 
 # -----------Profesores---------- #
 def profesores(request):
-    return render (request , "profesores.html") 
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render (request , "profesores.html", {"url":avatares[0].imagen.url}) 
 
 def ver_profesores(request):
 
@@ -155,7 +162,9 @@ def login_request(request):
             user = authenticate(username=usuario , password=contra)
             if user is not None:
                 login(request , user )
-                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}"})
+                avatares = Avatar.objects.filter(user=request.user.id)
+
+                return render( request , "inicio.html" , {"url":avatares[0].imagen.url, "mensaje":f"Bienvenido/a {usuario}"})
             else:
                 return HttpResponse(f"Usuario no encontrado")
         else:
