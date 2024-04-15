@@ -31,5 +31,5 @@ urlpatterns = [
     #---Edit User ---#
     path("editarPerfil", views.editarPerfil , name = "EditarPerfil"),
     #---LogOut---#
-    path("logout", LogoutView.as_view(template_name= "logout.html") , name="Logout"),
+    path("logout", LogoutView.as_view(template_name= "logout.html") , name="logout"),
 ]

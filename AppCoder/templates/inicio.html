@@ -13,13 +13,6 @@
                         <h5 class="card-title">Ramon Perez</h5>
                         <p class="card-text">Me gusto mucho el curso</p>
                         <a class="btn btn-danger" href="">Enviar mensaje</a>
-                        <form action="{% url 'Logout' %}" method="POST">
-
-                            {% csrf_token %}
-                    
-                            <button type="submit" class="btn btn-primary">Logout</button>
-                    
-                        </form>
                         <a href="{% url 'EditarPerfil' %}" class="btn btn-warning">Editar Perfil</a>
                     </div>
                 </div>

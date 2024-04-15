@@ -12,17 +12,23 @@ from django.contrib.auth.decorators import login_required
 # -----------Home---------- #
 def inicio (request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, "padre.html", {"url":avatares[0].imagen.url})
-
+    user = request.user.id
+    if user is None:
+        return render(request, "padre.html")
+    else:
+        return render(request, "padre.html", {"url":avatares[0].imagen.url})
+    
 # -----------Cursos---------- #
-
 @login_required
 def ver_cursos (request):
-    
     cursos = Curso.objects.all()
     avatares = Avatar.objects.filter(user=request.user.id)
+    user = request.user.id
+    if user is None:
+        return render(request, "ver_cursos.html")
+    else:
+        return render(request, "ver_cursos.html", {"url":avatares[0].imagen.url,"cursos": cursos })
     
-    return render (request, "ver_cursos.html", {"url": avatares[0].imagen.url, "cursos": cursos})
 
 def curso_formulario(request):
 
@@ -77,7 +83,11 @@ def editar_curso(request , id):
 
 def alumnos (request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    return render (request , "alumnos.html", {"url":avatares[0].imagen.url}) 
+    user=request.user.id
+    if user is None:
+        return render(request, "alumnos.html")
+    else:
+        return render(request, "alumnos.html", {"url":avatares[0].imagen.url })
 
 def ver_alumnos(request):
     alumnos = Alumno.objects.all()
@@ -100,7 +110,6 @@ def alumno_formulario(request):
 
     return render(request , "alta_alumnos.html")
 
-@login_required
 def eliminar_alumno(request, id):
     Alumno.objects.get(id=id).delete()
     alumno = Alumno.objects.all()
@@ -142,8 +151,13 @@ def resultado_alumno(request):
 # -----------Profesores---------- #
 def profesores(request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    return render (request , "profesores.html", {"url":avatares[0].imagen.url}) 
+    user=request.user.id
+    if user is None:
+        return render(request, "profesores.html")
+    else:
+        return render(request, "profesores.html", {"url":avatares[0].imagen.url })
 
+@login_required
 def ver_profesores(request):
 
     profesores = Profesores.objects.all()
@@ -163,7 +177,6 @@ def login_request(request):
             if user is not None:
                 login(request , user )
                 avatares = Avatar.objects.filter(user=request.user.id)
-
                 return render( request , "inicio.html" , {"url":avatares[0].imagen.url, "mensaje":f"Bienvenido/a {usuario}"})
             else:
                 return HttpResponse(f"Usuario no encontrado")

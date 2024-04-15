@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>App Coder | Home 🏠</title>
+        <title>
+            {%  block title %} App Coder {% endblock %}
+        </title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -25,15 +27,20 @@
                 <a class="navbar-brand" href="{% url 'alumnos' %}">Alumnos</a>
                 <a class="navbar-brand" href="{% url 'profesores' %}">Profesores</a>
                 
-                {%  if not request.user.is_authenticated %}
-                <a class="navbar-brand" href="{% url 'login'%}">Ingresar</a>
-                {% endif %}
                 
-                {% if request.user.is_authenticated %}
-                <img src="{{url}}" width="100px" height="100px"  alt="">
 
-                <p>Bienvenidx {{user.username}}!</p>
-                <a class="btn btn-primary" href="{% url 'Logout' %}"method="GET">Salir</a>
+                {%  if request.user.is_authenticated %}
+                    <img src="{{url}}" width="100px" height="100px"  alt="">
+                    <p>Bienvenidx {{user.username}}!</p>
+
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %} 
+                        <button class="btn btn-primary" type="submit">Salir</button>
+                    </form>
+                {% else %}
+                    
+                    <a class="navbar-brand" href="{% url 'login'%}">Ingresar</a>
+
                 {% endif %}
 
 
@@ -53,7 +60,7 @@
 
         
         <!-- Footer-->
-        <footer class="footer bg-light">
+        <footer class="footer bg-light" style="margin-bottom:0;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">

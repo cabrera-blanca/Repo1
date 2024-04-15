@@ -2,8 +2,10 @@
 
 {% load static %}
 
+{%  block title %} Login {% endblock %}
+
 {% block contenido %}
-    <div >
+    <div style="display: block; justify-content:center; align-items: center; margin: 5% 35%" >
         <h2> Ingrese sus datos</h2>
         <form action="" method="post">
             {% csrf_token%}

@@ -49,8 +49,3 @@ class UserEditForm(UserCreationForm):
         help_text ={k:"" for k in fields}
 
 #-----------------------------------------------------
-
-#--Profesores   
-    
-
-

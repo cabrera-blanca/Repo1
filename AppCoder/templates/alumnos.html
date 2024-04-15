@@ -2,21 +2,22 @@
 
 {% load static %}
 
-
+{%  block title %} Alumnos  - {{block.super}} {% endblock %}
 {% block contenido %}
 
     <main>
 
         <h1  style="margin: 2rem" class="text-center title"> Alumnos de Coder 🎓 </h1>
 
-
-        <div class="container">
-            <p>
-                <a href="ver_alumnos" class="btn btn-primary">Alumnos Registrados
-                </a>
-            </p>
-        </div>
-
+        {%  if request.user.is_authenticated %}
+            <div class="container">
+                <p>
+                    <a href="ver_alumnos" class="btn btn-primary">Alumnos Registrados
+                    </a>
+                </p>
+            </div>
+        
+        {% endif %}
 
 
         <div class="container" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;" >
